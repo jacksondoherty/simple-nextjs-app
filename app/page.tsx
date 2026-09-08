@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import ThemeToggle from "./theme-toggle";
+
 const tabs = ["Home", "About", "Notes", "Env"] as const;
 type Tab = (typeof tabs)[number];
 
@@ -19,7 +21,7 @@ const tabCopy: Record<Exclude<Tab, "Home" | "Env">, { eyebrow: string; title: st
   Notes: {
     eyebrow: "A blank canvas",
     title: "What should we build next?",
-    body: "Try asking an agent to add a photo gallery, a theme switcher, a guestbook, or a new page. This tab is ready to become anything.",
+    body: "Try asking an agent to add a photo gallery, a guestbook, or a new page. This tab is ready to become anything.",
   },
 };
 
@@ -57,6 +59,8 @@ export default function Home() {
             </button>
           ))}
         </nav>
+
+        <ThemeToggle />
       </header>
 
       {activeTab === "Home" ? (
