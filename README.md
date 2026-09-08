@@ -1,6 +1,6 @@
 # simple-nextjs-app
 
-A deliberately small Next.js app for testing cloud-agent workflows. It has a centered dog photo, three interactive tabs, responsive styling, and no backend or external services.
+A deliberately small Next.js app for testing cloud-agent workflows. It has a centered dog photo, four interactive tabs, light/dark themes, responsive styling, and no backend or external services.
 
 ## Run locally
 
@@ -20,6 +20,21 @@ pnpm start
 ```
 
 The main page lives in `app/page.tsx`, its styles are in `app/globals.css`, and the dog image is in `public/dog.png`.
+
+## Dark mode
+
+The button at the right of the header cycles through **system → light → dark**.
+"System" follows the OS setting live; an explicit choice is saved to
+`localStorage` under `theme` and wins on the next visit.
+
+- Every colour is a CSS custom property on `:root` in `app/globals.css`; the
+  `:root[data-theme="dark"]` block below it re-declares the same names, so new
+  UI picks up both themes for free as long as it uses the tokens.
+- `app/theme.ts` holds the shared helpers plus `THEME_INIT_SCRIPT`, a tiny
+  blocking script that `app/layout.tsx` puts in `<head>`. It sets
+  `<html data-theme>` before first paint, which is what keeps a dark-mode
+  reload from flashing a bright page.
+- `app/theme-toggle.tsx` is the button itself.
 
 ## Testing repo environments (hello-sandbox)
 
@@ -44,7 +59,6 @@ Or open the app in a browser and click the **Env** tab.
 
 ## Ideas for agent experiments
 
-- Add dark mode
 - Turn the tabs into separate routes
 - Add a dog-photo gallery
 - Create a guestbook backed by a database

@@ -1,10 +1,35 @@
 :root {
+  color-scheme: light;
   --ink: #21231f;
   --muted: #676b61;
   --paper: #f5f1e7;
-  --cream: #fffaf0;
   --green: #526347;
+  --accent-ink: #fffaf0;
+  --surface: #fffaf0;
+  --surface-veil: rgba(255, 250, 240, 0.62);
+  --surface-card: rgba(255, 250, 240, 0.78);
   --line: rgba(33, 35, 31, 0.15);
+  --dot: #d99c57;
+  --glow: rgba(255, 255, 255, 0.86);
+  --shadow: rgba(52, 54, 47, 0.13);
+}
+
+/* data-theme is set before first paint by THEME_INIT_SCRIPT (see app/theme.ts),
+   from the saved preference or, failing that, prefers-color-scheme. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #f0ebdf;
+  --muted: #a5a598;
+  --paper: #171814;
+  --green: #a8c096;
+  --accent-ink: #1b1d17;
+  --surface: #22241d;
+  --surface-veil: rgba(240, 235, 223, 0.06);
+  --surface-card: rgba(240, 235, 223, 0.05);
+  --line: rgba(240, 235, 223, 0.16);
+  --dot: #e0a862;
+  --glow: rgba(168, 192, 150, 0.1);
+  --shadow: rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -21,7 +46,7 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(circle at 50% 15%, rgba(255, 255, 255, 0.86), transparent 38rem),
+    radial-gradient(circle at 50% 15%, var(--glow), transparent 38rem),
     var(--paper);
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -60,7 +85,7 @@ main {
 }
 
 .brand-mark {
-  color: #d99c57;
+  color: var(--dot);
   font-size: 0.8rem;
 }
 
@@ -70,7 +95,7 @@ main {
   padding: 4px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 250, 240, 0.62);
+  background: var(--surface-veil);
 }
 
 .tab {
@@ -90,7 +115,7 @@ main {
 }
 
 .tab.active {
-  color: var(--cream);
+  color: var(--accent-ink);
   background: var(--green);
 }
 
@@ -134,8 +159,8 @@ h1 {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 28px;
-  background: rgba(255, 250, 240, 0.78);
-  box-shadow: 0 30px 70px rgba(52, 54, 47, 0.13);
+  background: var(--surface-card);
+  box-shadow: 0 30px 70px var(--shadow);
 }
 
 .dog-image {
@@ -171,7 +196,7 @@ figcaption {
   padding: 12px 19px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--cream);
+  background: var(--surface);
   cursor: pointer;
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
@@ -179,7 +204,29 @@ figcaption {
 .back-button:hover,
 .back-button:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(52, 54, 47, 0.1);
+  box-shadow: 0 8px 20px var(--shadow);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-veil);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--shadow);
 }
 
 footer {
@@ -196,6 +243,8 @@ footer {
   .site-header {
     width: min(100% - 24px, 1120px);
     padding: 18px 0;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .brand {
@@ -203,7 +252,10 @@ footer {
   }
 
   .tabs {
+    order: 1;
     gap: 0;
+    width: 100%;
+    justify-content: center;
   }
 
   .tab {
